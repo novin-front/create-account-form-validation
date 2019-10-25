@@ -1,22 +1,109 @@
-.App {
+*{
+  margin: 0;
+  padding: 0;
+}
+html{
+}
+body{
+ background: rgb(61, 188, 136);
+ background: linear-gradient(90deg, rgba(61, 188, 136, 0.8825669916404062) 15%, rgba(26, 172, 84, 0.8461524258140756) 80%);
+}
+.wrapper{
+  width: 80%;
+  height: 100vh;
+  margin: 0 auto;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  padding: 0 15px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+}
+.form-wrapper{
+  width: 50%;
+  max-width: 550px;
+  background: white;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: wrap;
+  padding: 20px;
+  border: 1px solid rgb(168, 168, 168);
+  border-radius: 5px;
+  -webkit-box-shadow: 3px 3px 10px 0px rgba(59, 59, 59, 1);
+  -moz-box-shadow: 3px 3px 10px 0px rgba(59, 59, 59, 1);
+  box-shadow: 3px 3px 10px 0px rgba(59, 59, 59, 1);
+}
+.form-wrapper h1 {
+  color: #828282;
+  margin: 20px;
+}
+.w-50{
+  width: 50%;
+}
+.form-group {
+  display: flex;
+  flex-flow: column;
+  text-align: left;
+}
+.form-group-md{
+  display: inline-flex;
+  flex-flow: column;
+  text-align: left;
+}
+input {
+  padding: 9px;
+  margin: 10px;
+  border: 1px solid #cacaca;
+  border-radius: 5px;
+}
+label {
+  padding-left: 10px;
+  color: #868686;
+}
+.btn {
+  background: #d2d2d2;
+  padding: 10px 14px;
+  border: 1px solid #a7a7a7;
+  color: #fbfbfb;
+  font-size: 15px;
+  border-radius: 5px;
+}
+.btn:hover{
+  opacity: .85;
+}
+.btn-primary{
+    background: #0a9770;
+    border: 1px solid #0a9770;
 }
 
-.App-link {
-  color: #09d3ac;
+.form-group-btn {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  margin: 20px;
+}
+span.errorMassage {
+  padding: 0 13px;
+  margin: -10px 0 0;
+  font-size: 13px;
+  color: red;
+}
+@media screen and (max-width:550px){
+  .wrapper {
+    width: 100%;
+    padding: 0;
+  }
+  .form-wrapper {
+    width: 70%;
+  }
+  .form-group-md {
+    display: flex;
+  }
+  .w-50 {
+    width: 100%;
+  }
+}
+@media screen and (max-width:768px) {
+  .form-wrapper {
+    width: 80%;
+  }
 }
