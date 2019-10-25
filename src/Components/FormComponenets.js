@@ -5,11 +5,13 @@ const initState ={
     lastName: null,
     email:null,
     password:null,
+    repeatPassword:null,
     FormErrors : {
             firstName: '',
             lastName: '',
             email: '',
             password: '',
+            repeatPassword:'',
     }
 }
 export default function FormComponenets() {
@@ -20,6 +22,7 @@ export default function FormComponenets() {
         let allInputs = document.querySelectorAll('input');
         await dontEmptyInput(allInputs)
         let valid = Object.values(formdata.FormErrors);
+        console.log(formdata)
         let onsubmits = valid.map(element => {
             if(element === ''){
                 return 'true'
@@ -28,6 +31,7 @@ export default function FormComponenets() {
             }
             
         });
+
         if (!(onsubmits.includes('false'))){
             alert('Your data has been successfully sent');
             console.table(formdata);
@@ -56,6 +60,7 @@ export default function FormComponenets() {
         const formError = formdata.FormErrors;
         const {name , value} = e.target;
         const input = e.target;
+
             switch (name) {
                 case 'firstName':
                      if (value.length >= 3) {
@@ -93,6 +98,17 @@ export default function FormComponenets() {
                         formError.password = 'minmum 6 characaters required';
                     }
                     break;
+                case 'repeatPassword':
+                    if (value.length >= 6) {
+                        formError.password = '';
+                        input.style.border = "1px solid #cacaca";
+                        console.log(`${value.toString()} === ${(formdata.password).toString()}`, (value.toString() === (formdata.password).toString()))
+                       formError.repeatPassword = (value.toString() === (formdata.password).toString()) ? '' : 'Repeat Password filde and Password filde Not Equals !'
+                    } else {
+                        input.style.border = "1px solid red";
+                        formError.repeatPassword = 'minmum 6 characaters required';
+                    }
+                    break;
                 default:
                     break;
             }
@@ -123,7 +139,7 @@ export default function FormComponenets() {
                     {formdata.FormErrors.firstName}</span>
                 </div>
                 < div className = "form-group-md w-50" >
-                    <label htmlFor="Lats_Name">Last Name</label>
+                    <label htmlFor="Last_Name">Last Name</label>
                     <input 
                     type="text" 
                     id ="Last_Name"
@@ -153,7 +169,7 @@ export default function FormComponenets() {
 
                 </div>
                 <div className="form-group">
-                    <label htmlFor="First_Name">Password</label>
+                    <label htmlFor="password">Password</label>
                     <input 
                     type="password" 
                     id ="password"
@@ -164,6 +180,19 @@ export default function FormComponenets() {
                     onChange={handelChenge}
                     />
                     <span className="errorMassage">{formdata.FormErrors.password}</span>
+                </div>
+                                <div className="form-group">
+                    <label htmlFor = "repeat_password"> Repeat Password </label>
+                    <input 
+                    type="password" 
+                    id = "repeat_password"
+                    name = "repeatPassword"
+                    className="form-control" 
+                    defaultValue=""
+                    placeholder=""
+                    onChange={handelChenge}
+                    />
+                    <span className="errorMassage">{formdata.FormErrors.repeatPassword}</span>
                     
 
                 </div>
