@@ -1,5 +1,12 @@
 import React,{useState} from 'react'
+import Select, { components } from 'react-select';
+import WithCallbacks from './test';
 const regularEmail = RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+const Regular ={
+     email : new RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
+     name: new RegExp(/([A-Za-z]{3,20})|([پچجحخهعغفقثصضشسیبلاتنمکگوئدذرزطظژؤإأءًٌٍَُِّ\s]{3,20})/),
+     password: new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})")
+}
 const initState ={
     firstName:null,
     lastName: null,
@@ -14,8 +21,19 @@ const initState ={
             repeatPassword:'',
     }
 }
+
+const SingleValue = ({ children, ...props }) => (
+  <components.SingleValue {...props}>{children}</components.SingleValue>
+);
 export default function FormComponenets() {
-    const [formdata, setformdata] = useState(initState)
+    const [formdata, setformdata] = useState(initState);
+    const [state, setstate] = useState([])
+    const options = [
+  { value: '111', label: 'Chocolate' },
+  { value: '222', label: 'Strawberry' },
+  { value: '333', label: 'Vanilla' }
+]
+
     const submitHandlaer = async (e)=>{
         e.preventDefault();
         let form = e.target;
@@ -55,6 +73,11 @@ export default function FormComponenets() {
                 element.style.border = "1px solid #cacaca";
             }
         });
+    }
+    const changeHandler =(e)=>{
+        let input = e.target;
+        let validKey = input.getAttribute('data-valid');
+        console.log(Regular[`${validKey}`].test(input.value),validKey,input.value)
     }
     const handelChenge =(e)=>{
         const formError = formdata.FormErrors;
@@ -130,10 +153,11 @@ export default function FormComponenets() {
                     type="text" 
                     id ="First_Name"
                     name = "firstName"
+                    data-valid='name'
                     className="form-control" 
                     defaultValue=""
                     placeholder="First Name"
-                    onChange={handelChenge}
+                    onChange={changeHandler}
                     />
                     <span className="errorMassage">
                     {formdata.FormErrors.firstName}</span>
@@ -144,6 +168,7 @@ export default function FormComponenets() {
                     type="text" 
                     id ="Last_Name"
                     name = "lastName"
+                    data-valid='name'
                     className="form-control" 
                     defaultValue=""
                     placeholder="First Name"
@@ -159,6 +184,7 @@ export default function FormComponenets() {
                     type="email" 
                     id ="email"
                     name="email" 
+                    data-valid='email'
                     className="form-control" 
                     defaultValue=""
                     placeholder="youereamil@gmail.com"
@@ -174,6 +200,7 @@ export default function FormComponenets() {
                     type="password" 
                     id ="password"
                     name="password" 
+                    data-valid='password'
                     className="form-control" 
                     defaultValue=""
                     placeholder=""
@@ -187,12 +214,46 @@ export default function FormComponenets() {
                     type="password" 
                     id = "repeat_password"
                     name = "repeatPassword"
+                    data-valid='password'
                     className="form-control" 
                     defaultValue=""
                     placeholder=""
-                    onChange={handelChenge}
+                    onChange={changeHandler}
                     />
                     <span className="errorMassage">{formdata.FormErrors.repeatPassword}</span>
+                    
+
+                </div>
+                < div className = "form-group-md w-50" >
+                    <label htmlFor="Last_Name">Last Name</label>
+                    <Select 
+                        options={options}
+                        components={{ SingleValue }}
+                        onChange={e=>{
+                            console.log('eeeee',e);
+                             setstate([e])
+                        }
+                        } />
+                    <span className="errorMassage">{formdata.FormErrors.lastName}</span>
+                    
+
+                </div>
+                 < div className = "form-group-md w-50" >
+                    <label htmlFor="Last_Name">Last Name</label>
+                    <Select 
+                            value={state.length ?  state[0].value : "eee"}
+                            inputValue = {
+                               state.length ? "" : "www"
+                            }
+                            onInputChange = {
+                                inputValue => setstate([
+                                    inputValue
+                                ])
+                            }
+                            options={state} 
+                            
+                            />
+                    <span className="errorMassage">{formdata.FormErrors.lastName}</span>
                     
 
                 </div>
